@@ -1,0 +1,31 @@
+	<!-- STPivot -->
+	<servlet>
+		<servlet-name>STPivot</servlet-name>
+		<jsp-file>/stpivot/STPivot.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>STPivotError</servlet-name>
+		<jsp-file>/stpivot/STPivotError.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>STPivotBusy</servlet-name>
+		<jsp-file>/stpivot/STPivotBusy.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>STPivot</servlet-name>
+		<url-pattern>/STPivot</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>STPivotError</servlet-name>
+		<url-pattern>/STPivotError</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>STPivotBusy</servlet-name>
+		<url-pattern>/STPivotBusy</url-pattern>
+	</servlet-mapping>
+	<!-- STPivot -->

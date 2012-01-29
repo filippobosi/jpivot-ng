@@ -1,0 +1,54 @@
+<Schema name="SteelWheels">
+	<Cube name="SteelWheelsSales">
+		<Table name="ORDERFACT" />
+		<Dimension name="Markets" foreignKey="CUSTOMERNUMBER">
+			<Hierarchy hasAll="true" allMemberName="All Markets" primaryKey="CUSTOMERNUMBER">
+				<Table name="CUSTOMER_W_TER" />
+				<!--Level name="Territory" column="TERRITORY" /-->
+				<Level name="Country" column="COUNTRY" />
+				<Level name="State Province" column="STATE" />
+				<Level name="City" column="CITY" />
+			</Hierarchy>
+		</Dimension>
+		<Dimension name="Customers" foreignKey="CUSTOMERNUMBER">
+			<Hierarchy hasAll="true" allMemberName="All Customers" primaryKey="CUSTOMERNUMBER">
+				<Table name="CUSTOMER_W_TER" />
+				<Level name="Customer" column="CUSTOMERNAME">
+                    <Property name="Customer Number" column="CUSTOMERNUMBER" type="Numeric" />
+                    <Property name="Contact First Name" column="CONTACTFIRSTNAME" type="String" />
+                    <Property name="Contact Last Name" column="CONTACTLASTNAME" type="String" />
+                    <Property name="Phone" column="PHONE" type="String" />
+                    <Property name="Address" column="ADDRESSLINE1" type="String" />
+                    <Property name="Credit Limit" column="CREDITLIMIT" type="Numeric" />
+				</Level>
+			</Hierarchy>
+		</Dimension>
+		<Dimension name="Product" foreignKey="PRODUCTCODE">
+			<Hierarchy hasAll="true" allMemberName="All Products" primaryKey="PRODUCTCODE">
+				<Table name="PRODUCTS" />
+				<Level name="Line" table="PRODUCTS" column="PRODUCTLINE" />
+				<Level name="Vendor" table="PRODUCTS" column="PRODUCTVENDOR" />
+				<Level name="Product" table="PRODUCTS" column="PRODUCTNAME">
+                    <Property name="Code" column="PRODUCTCODE" type="String" />
+                    <Property name="Vendor" column="PRODUCTVENDOR" type="String" />
+                    <Property name="Description" column="PRODUCTDESCRIPTION" type="String" />
+				</Level>
+			</Hierarchy>
+		</Dimension>
+		<Dimension name="Time" foreignKey="TIME_ID" type="TimeDimension">
+			<Hierarchy hasAll="true" allMemberName="All Years" primaryKey="TIME_ID">
+				<Table name="DIM_TIME" />
+				<Level name="Years" column="YEAR_ID" levelType="TimeYears" />
+				<Level name="Quarters" column="QTR_NAME" ordinalColumn="QTR_ID" levelType="TimeQuarters" />
+				<Level name="Months" column="MONTH_NAME" ordinalColumn="MONTH_ID" levelType="TimeMonths" />
+			</Hierarchy>
+		</Dimension>
+		<Dimension name="Order Status" foreignKey="STATUS">
+			<Hierarchy hasAll="true" allMemberName="All Status Types" primaryKey="STATUS">
+				<Level name="Type" column="STATUS" />
+			</Hierarchy>
+		</Dimension>
+		<Measure name="Quantity" column="QUANTITYORDERED" formatString="#,###" aggregator="sum" />
+		<Measure name="Sales" column="TOTALPRICE" formatString="#,###" aggregator="sum" />
+	</Cube>
+</Schema>

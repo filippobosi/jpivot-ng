@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<xform style="manual">
+	
+	<table border="0" cellspacing="0" cellpadding="2">
+		<!--tr>
+			<th colspan="2" class="xform-title">
+				<table border="0" cellspacing="0" cellpadding="0" width="100%">
+					<tr>
+						<th align="left" class="xform-title">Sort Properties</th>
+						<td align="right" class="xform-close-button">
+							<imgButton src="wcf/form/cancel.png" action="revert" label="fmt:sortform.close" hide="true" handler="com.tonbeller.wcf.form.ButtonHandler"/>
+						</td>
+					</tr>
+				</table>
+			</th>
+		</tr-->
+		<tr>
+			<td align="right">Sort Mode:</td>
+			<td>
+				<listBox1 type="int" bookmark="false" modelReference="extensions(sortRank).sortMode">
+					<listItem value="1" label="Keep Hierarchy Ascending"/>
+					<listItem value="2" label="Keep Hierarchy Descending"/>
+					<listItem value="3" label="Break Hierarchy Ascending"/>
+					<listItem value="4" label="Break Hierarchy Descending"/>
+					<listItem value="5" label="Top Count"/>
+					<listItem value="6" label="Bottom Count"/>
+				</listBox1>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">Number of rows for Ranking:</td>
+			<td>
+				<textField type="posint" bookmark="false" modelReference="extensions(sortRank).topBottomCount" title="please enter an integer" size="10"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">Show Memberproperties:</td>
+			<td>
+				<checkBox modelReference="rowAxisBuilder.axisConfig.propertyConfig.showProperties"/>
+			</td>
+		</tr>
+	</table>
+	
+	<buttons>
+		<imgButton src="/stpivot/style/wcf/form/ok.png" action="validate" label="OK" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+		<imgButton src="/stpivot/style/wcf/form/cancel.png" action="revert" label="Cancel" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+	</buttons>	
+</xform>

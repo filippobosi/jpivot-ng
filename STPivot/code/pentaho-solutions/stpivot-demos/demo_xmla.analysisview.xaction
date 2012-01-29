@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence>
+
+    <name>demo_xmla.analysisview.xaction</name>
+    <title>%title</title>
+    <version>1</version>
+    <logging-level>ERROR</logging-level>
+    <documentation>
+        <author>Karel</author>
+        <help/>
+        <result-type>report</result-type>
+        <description>%description</description>
+        <icon></icon>
+    </documentation>
+    
+    <inputs>
+        <mode type="string">
+            <default-value/>
+            <sources>
+                <request>mode</request>
+            </sources>
+        </mode>
+        <!--
+        In order to function in XMLA mode, stpivot looks for an input param named "uri".
+        If found, then it will also looks for "datasource" and "catalog" parms,
+        to define an XMLA connection.
+        
+        Current PivotViewComponent in Pentaho doesn't allow such params in its definition.
+        That's why we have to define them as input parameters with the default value
+        we want to send, and then as outputs params from xaction.
+        
+        NOTE: Pentaho XMLA don't work properly by default, you should edit the configuration file:
+        ".../pentaho-solutions/system/olap/datasources.xml", and change the Provider from PentahoXMLA
+        to Mondrian (<DataSourceInfo>Provider=Mondrian</DataSourceInfo>).
+        -->
+        <!-- BEGIN code to enable XMLA mode in stpivot -->
+        <uri type="string">
+            <default-value>http://localhost:8080/pentaho/Xmla?userid=joe&amp;password=password</default-value>
+            <sources>
+                <request>uri</request>
+            </sources>
+        </uri>
+        <datasource type="string">
+            <default-value>Provider=Mondrian;DataSource=Pentaho</default-value>
+            <sources>
+                <request>datasource</request>
+            </sources>
+        </datasource>
+        <catalog type="string">
+            <default-value>SteelWheels</default-value>
+            <sources>
+                <request>catalog</request>
+            </sources>
+        </catalog>
+        <!-- END code to enable XMLA mode in stpivot -->
+    </inputs>
+    
+    <outputs>
+        <model type="string"/>
+        <connection type="string"/>
+        <mdx type="string"/>
+        <options type="list"/><!-- Not used in STPivot -->
+        <title type="string"/>
+        <url type="string">
+            <destinations>
+                <response>redirect</response>
+            </destinations>
+        </url>
+        <charttype type="string"/>
+        <chartlocation type="string"/>
+        <chartheight type="string"/>
+        <chartwidth type="string"/>
+        <showgrid type="string"/>
+        <!-- BEGIN code to enable XMLA mode in stpivot -->
+        <uri type="string"/>
+        <datasource type="string"/>
+        <catalog type="string"/>
+        <!-- END code to enable XMLA mode in stpivot -->
+    </outputs>
+    
+    <resources/>
+    
+    <actions>
+        
+        <action-definition>
+            <component-name>PivotViewComponent</component-name>
+            <action-type>Pivot View</action-type>
+            <action-name>Pivot View</action-name>
+            <logging-level>ERROR</logging-level>
+            <action-inputs>
+                <mode type="string"/>
+            </action-inputs>
+            <action-outputs>
+                <model type="string"/>
+                <connection type="string"/>
+                <mdx type="string"/>
+                <options type="list"/>
+                <title type="string"/>
+                <url type="string"/>
+                <charttype type="string"/>
+                <chartlocation type="string"/>
+                <chartheight type="string"/>
+                <chartwidth type="string"/>
+                <showgrid type="string"/>
+            </action-outputs>
+            <component-definition>
+                <title>Drill Down to Pivot Table</title>
+                <viewer>STPivot</viewer>
+                <charttype>8</charttype>
+                <chartlocation>right</chartlocation>
+                <chartheight>500</chartheight>
+                <chartwidth>600</chartwidth>
+                <showgrid>true</showgrid>
+                <model><![CDATA[stpivot-demos/steelwheels.mondrian.xml]]></model>
+                <!--connection>jdbc/SampleData</connection-->
+                <!--query>default</query-->
+                <options><!-- Not used in STPivot -->
+                    <personal/>
+                    <cube-nav/>
+                    <mdx-edit/>
+                    <sort-conf/>
+                    <spacer/>
+                    <level-style/>
+                    <hide-spans/>
+                    <properties/>
+                    <non-empty/>
+                    <swap-axes/>
+                    <spacer/>
+                    <drill-member/>
+                    <drill-position/>
+                    <drill-replace/>
+                    <drill-thru/>
+                    <spacer/>
+                    <chart/>
+                    <chart-conf/>
+                    <spacer/>
+                    <print-conf/>
+                    <print-pdf/>
+                    <spacer/>
+                    <excel/>
+                </options>
+                <jndi>SampleData</jndi>
+                <query><![CDATA[
+                    SELECT
+                        { [Time].[Years].Members } ON COLUMNS,
+                        { [Markets].[All Markets].Children } ON ROWS
+                    FROM [SteelWheelsSales]
+                    WHERE [Measures].[Sales]
+                ]]></query>
+            </component-definition>
+        </action-definition>
+        
+    </actions>
+    
+</action-sequence>

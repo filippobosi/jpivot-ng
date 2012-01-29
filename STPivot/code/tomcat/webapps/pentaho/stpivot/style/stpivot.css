@@ -1,0 +1,57 @@
+.imgButton {
+	cursor: pointer;
+	border: 0px;
+}
+
+.selectable.ui-selected, .selectable.ui-selecting {
+	color: white;
+	background-color: #316AC5;
+}
+
+.showxml {
+	
+}
+
+.prop_name {
+	text-align: right;
+}
+
+.ui-autocomplete {
+	max-height: 100px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
+	width: 300px;
+	font-size: 60%;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+	height: 100px;
+	width: 300px;
+}
+
+/**
+ *	Basic Layout Theme
+ * 
+ *	This theme uses the default layout class-names for all classes
+ *	Add any 'custom class-names', from options: paneClass, resizerClass, togglerClass
+ */
+
+.ui-layout-pane { /* all 'panes' */
+	background: #FFF;
+	border: 1px solid #BBB;
+	padding: 10px;
+	overflow: auto;
+}
+
+.ui-layout-resizer { /* all 'resizer-bars' */
+	background: #DDD;
+}
+
+.ui-layout-toggler { /* all 'toggler-buttons' */
+	background: #AAA;
+}

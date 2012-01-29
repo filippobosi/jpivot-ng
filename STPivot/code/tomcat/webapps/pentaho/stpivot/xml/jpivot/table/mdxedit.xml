@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<xform style="manual" bundle="com.tonbeller.jpivot.table.resources">
+	
+	<table border="0" cellspacing="0" cellpadding="2" id="mdxEditForm" style="width:900px;">
+		<tr>
+			<td align="left">
+				<span class="xform-error"><error-message/></span>
+			</td>
+			<td align="right" width="1%" nowrap="nowrap" class="imgButton">
+				<imgButton src="stpivot/style/wcf/form/ok.png" action="validate" label="fmt:mdxedit.apply" hide="false" handler="com.tonbeller.wcf.form.ButtonHandler"/>
+				<imgButton src="stpivot/style/wcf/form/cancel.png" action="revert" label="fmt:mdxedit.reset" hide="false" handler="com.tonbeller.wcf.form.ButtonHandler"/>
+			</td>
+		</tr>
+		<tr style="display:none;">
+			<td colspan="2">
+				<textArea rows="20" cols="150" type="string" modelReference="extensions(mdxQuery).mdxQuery" bookmark="false"/>
+			</td>
+		</tr>
+	</table>
+	
+</xform>

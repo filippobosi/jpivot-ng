@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+	<head>
+		<title>CodeMirror 2: MDX mode</title>
+		<link rel="stylesheet" href="../../lib/codemirror.css">
+		<script src="../../lib/codemirror.js"></script>
+		<script src="mdx.js"></script>
+		<link rel="stylesheet" href="mdx.css">
+	</head>
+	<body>
+		<div id="toolbar" style="margin:0px;padding:0px;font-size:14px;">
+			<input type="image" src="images/arrow_undo.png" title="undo (ctrl-z)" onclick="editor.undo();return false"/>
+			<input type="image" src="images/arrow_redo.png" title="redo (ctrl-y)" onclick="editor.redo();return false"/>
+			&nbsp;&nbsp;&nbsp;
+			<input type="image" src="images/page_refresh.png" onclick="reindent();return false"/>
+			<input type="image" src="images/text_indent.png" onclick="indentSelected('add');return false"/>
+			<input type="image" src="images/text_indent_remove.png" onclick="indentSelected('sub');return false"/>
+			&nbsp;&nbsp;&nbsp;
+			<input type="text" id="searchkey" name="searchkey" style="width:150px;" />
+			<input type="image" src="images/find.png" onclick="search();return false"/>
+			<input type="checkbox" id="ignorecase" name="case-sensitive" onclick="search(true)">A/a
+			<input type="checkbox" id="regex" name="reg-exp" onclick="search(true)">RegEx
+			
+		</div>
+		<textarea id="mirror">/*
+  This a sample MDX editor based on CodeMirror
+*/
+WITH
+  SET [Range] as '{[Time].[Year].[2010], [Time].[Year].[2011]}' // this the timeframe to show
+  MEMBER [Time].[Range Total] as 'Aggregate([Range])' -- this member aggregates depending on measure
+  , FORMAT_STRING = "#,##0.00"
+  , SOLVE_ORDER = 1
+SELECT
+  { [Measures].AllMembers } ON COLUMNS,
+  Union([Range], {[Time].[Range Total]}) ON ROWS
+FROM [Sales]
+WHERE ( [Store].[All Stores] )</textarea>
+		<script>
+var editor = CodeMirror.fromTextArea(document.getElementById("mirror"), {
+		mode: "text/x-mdx",
+		indentUnit: 2,
+		indentWithTabs: true,
+		tabMode: "shift",
+		enterMode: "keep",
+		lineNumbers: true,
+		firstLineNumber: 1,
+		gutter: true,
+		readOnly: false,
+		onCursorActivity: function(){
+			editor.setLineClass(hlLine, null);
+			hlLine = editor.setLineClass(editor.getCursor().line, "activeline");
+		},
+		onGutterClick: function(cm, n){
+			var info = cm.lineInfo(n);
+			if (info.markerText)
+				cm.clearMarker(n);
+			else
+				cm.setMarker(n, "<span style=\"color: #900\">->%N%</span>");
+		},
+		matchBrackets: true,
+		workTime: 200,
+		workDelay: 300,
+		undoDepth : 40,
+		onKeyEvent: function(i, e){
+			if (e.keyCode == 32 && (e.ctrlKey || e.metaKey) && !e.altKey){
+				e.stop();
+				return startComplete();
+			}
+		}
+	});
+
+var hlLine = editor.setLineClass(0, "activeline");
+
+		</script>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<xform style="manual">
+	
+	<table border="0" cellspacing="0" cellpadding="2">
+		<!--tr>
+			<th colspan="2" class="xform-title">
+				<table border="0" cellspacing="0" cellpadding="0" width="100%">
+					<tr>
+						<th align="left" class="xform-title">
+							Print Properties
+						</th>
+						<td align="right" class="xform-close-button">
+							<imgButton src="wcf/form/cancel.png" action="revert" label="Close" hide="true" handler="com.tonbeller.wcf.form.ButtonHandler"/>
+						</td>
+					</tr>
+				</table>
+			</th>
+		</tr-->
+		<tr>
+			<td align="right">Título:</td>
+			<td>
+				<textField type="string" modelReference="reportTitle" size="42" title="entre un título para este reporte"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">Orientación:</td>
+			<td>
+				<listBox1 type="string" modelReference="pageOrientation">
+					<listItem value="portrait" label="Portrait (Vertical)"/>
+					<listItem value="landscape" label="Landscape (Horizontal)"/>
+				</listBox1>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">Tamaño de Papel:</td>
+			<td>
+				<listBox1 type="string" modelReference="paperType">
+					<listItem value="USletter" label="Carta"/>
+					<listItem value="A3" label="A3"/>
+					<listItem value="A4" label="A4"/>
+					<listItem value="A5" label="A5"/>
+					<listItem value="custom" label="Personalizado"/>
+					<listItem value="auto" label="Auto"/>
+				</listBox1>
+			</td>
+		</tr>    
+		<tr>
+			<td align="right">Altura/Ancho personalizado:</td>
+			<td>
+				<textField type="double" modelReference="pageHeight" size="4" title="entre la altura del Papel (cm)"/>cm
+				<textField type="double" modelReference="pageWidth" size="4" title="entre el ancho del Papel (cm)"/>cm  (0=predeterminado A4)
+			</td>
+		</tr>
+		<tr>
+			<td align="right">Ancho de Tabla:</td>
+			<td>
+				<checkBox modelReference="setTableWidth"/>(off = auto)
+				<textField type="double" modelReference="tableWidth" size="4" title="entre un Ancho de Tabla (cm)"/>cm
+			</td>
+		</tr>
+		<tr>
+			<td align="right">Gráfica en página independiente:</td>
+			<td>
+				<checkBox modelReference="chartPageBreak"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="right" colspan="2">
+				<imgButton src="/stpivot/style/wcf/form/ok.png" action="validate" label="OK" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+				<imgButton src="/stpivot/style/wcf/form/cancel.png" action="revert" label="Cancel" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+			</td>
+		</tr>
+	</table>
+
+</xform>

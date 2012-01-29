@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence>
+
+    <name>demo_clickables.analysisview.xaction</name>
+    <title>%title</title>
+    <version>1</version>
+    <logging-level>ERROR</logging-level>
+    <documentation>
+        <author>Karel</author>
+        <help/>
+        <result-type>report</result-type>
+        <description>%description</description>
+        <icon></icon>
+    </documentation>
+    
+    <inputs>
+        <mode type="string">
+            <default-value/>
+            <sources>
+                <request>mode</request>
+            </sources>
+        </mode>
+        <!--
+        In order to define clickable members, stpivot looks for an input param named "clickables".
+        It is formmed by the attributes of <jp:clickable> tags, delimited by semi-colons (";").
+        
+        Current PivotViewComponent in Pentaho doesn't allow such param in its definition.
+        That's why we have to define it as input parameter with the default value
+        we want to send, and then as output param from xaction.
+        -->
+        <!-- BEGIN code to enable clickables in stpivot -->
+        <clickables type="string">
+            <default-value>urlPattern="http://www.google.com/search?q={0}" uniqueName="[Time]" menuLabel="Search with Google"; urlPattern="http://www.google.com/search?q={0}" uniqueName="[Markets]" menuLabel="Search with Google"; urlPattern="http://search.yahoo.com/search?p={0}" uniqueName="[Markets]" menuLabel="Search with Yahoo"</default-value>
+            <sources>
+                <request>clickables</request>
+            </sources>
+        </clickables>
+        <!-- END code to enable clickables in stpivot -->
+    </inputs>
+    
+    <outputs>
+        <model type="string"/>
+        <connection type="string"/>
+        <mdx type="string"/>
+        <options type="list"/><!-- Not used in STPivot -->
+        <title type="string"/>
+        <url type="string">
+            <destinations>
+                <response>redirect</response>
+            </destinations>
+        </url>
+        <charttype type="string"/>
+        <chartlocation type="string"/>
+        <chartheight type="string"/>
+        <chartwidth type="string"/>
+        <showgrid type="string"/>
+        <!-- BEGIN code to enable clickables in stpivot -->
+        <clickables type="string"/>
+        <!-- END code to enable clickables in stpivot -->
+    </outputs>
+    
+    <resources/>
+    
+    <actions>
+        
+        <action-definition>
+            <component-name>PivotViewComponent</component-name>
+            <action-type>Pivot View</action-type>
+            <action-name>Pivot View</action-name>
+            <logging-level>ERROR</logging-level>
+            <action-inputs>
+                <mode type="string"/>
+            </action-inputs>
+            <action-outputs>
+                <model type="string"/>
+                <connection type="string"/>
+                <mdx type="string"/>
+                <options type="list"/>
+                <title type="string"/>
+                <url type="string"/>
+                <charttype type="string"/>
+                <chartlocation type="string"/>
+                <chartheight type="string"/>
+                <chartwidth type="string"/>
+                <showgrid type="string"/>
+            </action-outputs>
+            <component-definition>
+                <title>Drill Down to Pivot Table</title>
+                <viewer>STPivot</viewer>
+                <charttype>8</charttype>
+                <chartlocation>right</chartlocation>
+                <chartheight>500</chartheight>
+                <chartwidth>600</chartwidth>
+                <showgrid>true</showgrid>
+                <model><![CDATA[stpivot-demos/steelwheels.mondrian.xml]]></model>
+                <!--connection>jdbc/SampleData</connection-->
+                <!--query>default</query-->
+                <options><!-- Not used in STPivot -->
+                    <personal/>
+                    <cube-nav/>
+                    <mdx-edit/>
+                    <sort-conf/>
+                    <spacer/>
+                    <level-style/>
+                    <hide-spans/>
+                    <properties/>
+                    <non-empty/>
+                    <swap-axes/>
+                    <spacer/>
+                    <drill-member/>
+                    <drill-position/>
+                    <drill-replace/>
+                    <drill-thru/>
+                    <spacer/>
+                    <chart/>
+                    <chart-conf/>
+                    <spacer/>
+                    <print-conf/>
+                    <print-pdf/>
+                    <spacer/>
+                    <excel/>
+                </options>
+                <jndi>SampleData</jndi>
+                <query><![CDATA[
+                    SELECT
+                        { [Time].[Years].Members } ON COLUMNS,
+                        { [Markets].[All Markets].Children } ON ROWS
+                    FROM [SteelWheelsSales]
+                    WHERE [Measures].[Sales]
+                ]]></query>
+            </component-definition>
+        </action-definition>
+        
+    </actions>
+    
+</action-sequence>
